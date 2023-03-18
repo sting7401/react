@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@18/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const userLocalStorage = (item, value = '') => {
+				const [state, setState] = React.useState(() => {
+					return window.localStorage.getItem(item) || '';
+				});
+
+				React.useEffect(() => {
+					window.localStorage.setItem(item, state);
+				}, [state]);
+
+				return [state, setState];
+			};
+
+			const App = () => {
+				const [keyword, setKeyword] = userLocalStorage('keyword');
+				const [typing, setTyping] = userLocalStorage('typing', false);
+				const [result, setResult] = userLocalStorage('result');
+
+				const handleChange = event => {
+					setTyping(true);
+					setKeyword(event.target.value);
+				};
+
+				const handleClick = () => {
+					setTyping(false);
+					setKeyword(`${keyword}`);
+				};
+
+				return (
+					<>
+						<input
+							type="text"
+							className="border"
+							onChange={handleChange}
+							value={keyword}
+						/>
+						<button onClick={handleClick} className="border">
+							search
+						</button>
+						<p>{typing ? `looking ${keyword}` : result}</p>
+					</>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
+		</script>
+	</body>
+</html>

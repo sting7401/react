@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,21 +18,43 @@
 	</head>
 	<body>
 		<div id="root"></div>
+
 		<script type="text/babel">
 			const rootElement = document.getElementById('root');
-			const text = 'title';
-			const titleClassName = 'title';
-			const props = { className: titleClassName, children: text };
-			const customTitle = <h1 {...props} />;
-			const element = customTitle;
 
-			const div = (
-				<>
-					<h1>1</h1>,<h2>2</h2>,<h3>3</h3>
-				</>
-			);
+			const InputText = () => {
+				return <></>;
+			};
 
-			ReactDOM.render(div, rootElement);
+			const App = () => {
+				const inputRef = React.useRef();
+				const divRef = React.useRef();
+
+				React.useEffect(() => {
+					console.dir(inputRef);
+
+					inputRef.current.focus();
+					divRef.current.style.backgroundColor = 'red';
+					return () => {};
+				}, [inputRef]);
+
+				return (
+					<>
+						<input type="text" className="border" ref={inputRef} />
+
+						<div
+							ref={divRef}
+							style={{
+								height: 100,
+								width: 100,
+								backgroundColor: 'black',
+							}}
+						></div>
+					</>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
 		</script>
 	</body>
 </html>

@@ -5,7 +5,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-		<script src="https://cdn.tailwindcss.com"></script>
 		<script
 			src="https://unpkg.com/react@18/umd/react.development.js"
 			crossorigin
@@ -18,21 +17,25 @@
 	</head>
 	<body>
 		<div id="root"></div>
+
 		<script type="text/babel">
 			const rootElement = document.getElementById('root');
-			const text = 'title';
-			const titleClassName = 'title';
-			const props = { className: titleClassName, children: text };
-			const customTitle = <h1 {...props} />;
-			const element = customTitle;
 
-			const div = (
-				<>
-					<h1>1</h1>,<h2>2</h2>,<h3>3</h3>
-				</>
+			const handleClick = () => {
+				alert('alert');
+			};
+
+			const mouseOut = () => {
+				alert('out');
+			};
+
+			const element = (
+				<button onClick={handleClick} onMouseOut={mouseOut}>
+					press
+				</button>
 			);
 
-			ReactDOM.render(div, rootElement);
+			ReactDOM.render(element, rootElement);
 		</script>
 	</body>
 </html>

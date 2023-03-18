@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@17/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const state = { keyword: '', typing: false, result: '' };
+
+			const App = () => {
+				const handleChange = event => {
+					console.log(event.target.value);
+
+					setState({ typing: true, keyword: event.target.value });
+				};
+
+				const handleClick = () => {
+					setState({ typing: false, result: `${setState.keyword}` });
+				};
+
+				return (
+					<>
+						<input
+							type="text"
+							className="border"
+							onChange={handleChange}
+						/>
+						<button onClick={handleClick} className="border">
+							search
+						</button>
+						<p>
+							{state.typing
+								? `looking ${state.keyword}`
+								: state.keyword}
+						</p>
+					</>
+				);
+			};
+
+			const setState = newState => {
+				Object.assign(state, newState);
+
+				render();
+			};
+
+			const render = () => {
+				ReactDOM.render(<App />, rootElement);
+			};
+
+			render();
+		</script>
+	</body>
+</html>
