@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@18/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const App = () => {
+				const [massage, setMassage] = React.useState('');
+				const [phoneNumber, setPhoneNumber] = React.useState('');
+
+				const handleSubmit = event => {
+					event.preventDefault();
+
+					const phoneNumber = event.target.elements.phone.value;
+
+					alert(phoneNumber);
+				};
+
+				const handleChange = event => {
+					if (event.target.value.startsWith('0')) {
+						setMassage('번호');
+						setPhoneNumber(event.target.value);
+					} else if (event.target.value === 0) {
+						setPhoneNumber('');
+						setMassage('');
+					} else {
+						setPhoneNumber('');
+						setMassage('0 부터 시작');
+					}
+				};
+
+				return (
+					<form onSubmit={handleSubmit}>
+						<label htmlFor="phone">phone</label>
+						<input
+							type="text"
+							id="phone"
+							name="phone"
+							className="border"
+							onChange={handleChange}
+							value={phoneNumber}
+						/>
+						<p>{massage}</p>
+						<button
+							type="submit"
+							disabled={
+								phoneNumber.length === 0 || massage === '번호'
+							}
+						>
+							실행
+						</button>
+						<p>{phoneNumber}</p>
+					</form>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
+		</script>
+	</body>
+</html>
