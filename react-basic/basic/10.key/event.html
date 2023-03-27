@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@18/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const todos = [
+				[
+					{ id: 1, value: '1todo1' },
+					{ id: 2, value: 'todo2' },
+					{ id: 3, value: 'todo3' },
+					{ id: 4, value: '4todo' },
+					{ id: 5, value: '5todo' },
+				],
+				[
+					{ id: 1, value: '2todo1' },
+					{ id: 2, value: 'todo2' },
+					{ id: 4, value: '4todo' },
+					{ id: 5, value: '5todo' },
+				],
+				[
+					{ id: 1, value: '3todo1' },
+					{ id: 2, value: 'todo2' },
+					,
+					{ id: 5, value: '5todo' },
+				],
+			];
+
+			const App = () => {
+				const [items, setItems] = React.useState(todos[0]);
+
+				React.useEffect(() => {
+					const interval = setInterval(() => {
+						const random = Math.floor(Math.random() * 3);
+						setItems(todos[random]);
+					}, 1000);
+
+					return () => {
+						clearInterval(interval);
+					};
+				}, []);
+
+				const handleCLick = todo => {
+					setItems(items => items.filter(item => item !== todo));
+				};
+
+				const handleRestore = () => {
+					setItems(items => [
+						...items,
+						todos.find(item => !items.includes(item)),
+					]);
+				};
+
+				return (
+					<>
+						{items.map((todo, index) => (
+							<div key={todo.id}>
+								<button
+									onClick={() => handleCLick(todo)}
+									className="border"
+								>
+									{todo.value}
+								</button>
+
+								<button
+									onClick={handleRestore}
+									className="border"
+								>
+									restore
+								</button>
+							</div>
+						))}
+					</>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
+		</script>
+	</body>
+</html>
