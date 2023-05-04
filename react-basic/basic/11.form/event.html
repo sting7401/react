@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@18/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const Id = ({ handleIdChange }) => {
+				return (
+					<>
+						<label htmlFor="">id</label>
+						<input
+							type="text"
+							onChange={handleIdChange}
+							className="border"
+						/>
+					</>
+				);
+			};
+
+			const Password = ({ handlePasswordChange }) => {
+				return (
+					<>
+						<label htmlFor="">password</label>
+						<input
+							type="password"
+							onChange={handlePasswordChange}
+							className="border"
+						/>
+					</>
+				);
+			};
+
+			const App = () => {
+				const [id, setId] = React.useState('');
+				const [password, setPassword] = React.useState('');
+
+				const handleChange = event => {
+					setId(event.target.value);
+				};
+				const handleIdChange = event => {
+					setId(event.target.value);
+				};
+				const handlePasswordChange = event => {
+					setPassword(event.target.value);
+				};
+				const handleLoginClick = () => {
+					alert(`${id}, ${password}`);
+				};
+				return (
+					<>
+						<Id handleIdChange={handleIdChange} />
+						<Password handlePasswordChange={handlePasswordChange} />
+						<button
+							disabled={id.length === 0 || password.length === 0}
+							onClick={handleLoginClick}
+						>
+							로그인
+						</button>
+					</>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
+		</script>
+	</body>
+</html>

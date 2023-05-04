@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<script
+			src="https://unpkg.com/react@18/umd/react.development.js"
+			crossorigin
+		></script>
+		<script
+			src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+			crossorigin
+		></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	<body>
+		<div id="root"></div>
+
+		<script type="text/babel">
+			const rootElement = document.getElementById('root');
+
+			const App = () => {
+				const [data, setData] = React.useState(null);
+				const [error, setError] = useState(null);
+
+				React.useEffect(() => {
+					fetch(
+						'http://127.0.0.1:3000/basic/12.fetch/webtoon-list.json',
+					)
+						.then(response => response.json())
+						.then(myJson => setData(myJson.data))
+						.catch(error => setError(error));
+				}, []);
+
+				if (error != null) {
+					return { error };
+				}
+
+				if (data === null) {
+					return <p>로딩</p>;
+				}
+
+				console.log(data);
+
+				return (
+					<>
+						<div>
+							<p>people</p>
+							{data.webtoonList.map(item => (
+								<p>{item.title}</p>
+							))}
+						</div>
+					</>
+				);
+			};
+
+			ReactDOM.render(<App />, rootElement);
+		</script>
+	</body>
+</html>
