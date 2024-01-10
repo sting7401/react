@@ -46,6 +46,7 @@ function App() {
                 <p>1월</p>
             </div>
 
+
             <LiComponent></LiComponent>
 
             <ModalComponent></ModalComponent>
